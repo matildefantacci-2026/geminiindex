@@ -45,7 +45,6 @@
             const [currentView, setCurrentView] = useState('daily');
             const [saveStatus, setSaveStatus] = useState('');
             const [collapsedDays, setCollapsedDays] = useState({});
-            const [lastBackup, setLastBackup] = useState(localStorage.getItem('last-backup-date') || 'Never');
             
             const [timesheet, setTimesheet] = useState(() => {
                 const saved = localStorage.getItem('timesheet-v3');
@@ -125,9 +124,6 @@
                 a.href = window.URL.createObjectURL(blob);
                 a.download = `timesheet_backup_${new Date().toISOString().split('T')[0]}.json`;
                 a.click();
-                const now = new Date().toLocaleString();
-    setLastBackup(now);
-    localStorage.setItem('last-backup-date', now);
             };
 
             const importJSON = (e) => {
@@ -221,11 +217,6 @@
                             <div>
                                 <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Sales Timesheet</h1>
                                 {saveStatus && <span className="text-[#86efac] font-bold text-xs uppercase">{saveStatus}</span>}
-                                <p className="text-[10px] text-gray-400 font-medium uppercase mt-1">
-        Last Backup: <span className={lastBackup === 'Never' ? 'text-rose-400' : 'text-emerald-400'}>{lastBackup}</span>
-    </p>
-    {saveStatus && <span className="text-[#86efac] font-bold text-xs uppercase">{saveStatus}</span>}
-</div>
                             </div>
                             <div className="flex gap-2 flex-wrap justify-center">
                                 <button onClick={exportJSON} className="flex items-center gap-2 bg-[#dcfce7] text-[#166534] px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#bbf7d0] transition-colors"><Download /> Backup</button>
@@ -313,5 +304,6 @@
     </script>
 </body>
 </html>
+
 
 
